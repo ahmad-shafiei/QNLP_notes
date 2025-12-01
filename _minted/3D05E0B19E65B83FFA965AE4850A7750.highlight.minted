@@ -1,0 +1,22 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} List all available Conda environments}
+conda\PYG{+w}{ }env\PYG{+w}{ }list
+\PYG{c+c1}{\PYGZsh{} Display information about the active environment}
+conda\PYG{+w}{ }info
+\PYG{c+c1}{\PYGZsh{} Check installed packages in the qnlp environment}
+conda\PYG{+w}{ }list\PYG{+w}{ }\PYGZhy{}n\PYG{+w}{ }qnlp
+\PYG{c+c1}{\PYGZsh{} Activate the qnlp environment}
+conda\PYG{+w}{ }activate\PYG{+w}{ }qnlp
+\PYG{c+c1}{\PYGZsh{} Check Python version inside the qnlp environment}
+python\PYG{+w}{ }\PYGZhy{}\PYGZhy{}version
+\PYG{c+c1}{\PYGZsh{} Check the version of a specific package (example: numpy)}
+python\PYG{+w}{ }\PYGZhy{}c\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}import numpy; print(numpy.\PYGZus{}\PYGZus{}version\PYGZus{}\PYGZus{})\PYGZdq{}}
+\PYG{c+c1}{\PYGZsh{} Update a specific package inside qnlp}
+conda\PYG{+w}{ }update\PYG{+w}{ }numpy\PYG{+w}{ }\PYGZhy{}n\PYG{+w}{ }qnlp
+\PYG{c+c1}{\PYGZsh{} Export the environment configuration to a YAML file}
+conda\PYG{+w}{ }env\PYG{+w}{ }\PYG{n+nb}{export}\PYG{+w}{ }\PYGZhy{}n\PYG{+w}{ }qnlp\PYG{+w}{ }\PYGZgt{}\PYG{+w}{ }qnlp\PYGZus{}environment.yml
+\PYG{c+c1}{\PYGZsh{} Recreate the same environment from the YAML file}
+conda\PYG{+w}{ }env\PYG{+w}{ }create\PYG{+w}{ }\PYGZhy{}f\PYG{+w}{ }qnlp\PYGZus{}environment.yml
+\PYG{c+c1}{\PYGZsh{} Remove the qnlp environment completely}
+conda\PYG{+w}{ }remove\PYG{+w}{ }\PYGZhy{}n\PYG{+w}{ }qnlp\PYG{+w}{ }\PYGZhy{}\PYGZhy{}all
+\end{MintedVerbatim}

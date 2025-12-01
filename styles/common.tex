@@ -15,9 +15,8 @@
 
 \usepackage{algorithmicx,algorithm}
 
-\usepackage[localise=on,extrafootnotefeatures]{xepersian}
+\usepackage[extrafootnotefeatures]{xepersian}
 \usepackage[noend]{algpseudocode}
-\input{styles/alg-fa}
 
 \usepackage[bottom]{footmisc}
 %\addtolength{\skip\footins}{1pc}
@@ -39,7 +38,8 @@
 \fancyhead[R]{\rightmark}
 \fancyhead[L]{\thepage}
 
-
+\usepackage{perpage}
+\MakePerPage{footnote}
 % -------------------- Fonts --------------------
 
 \settextfont[
@@ -50,7 +50,9 @@ BoldFont=XB NiloofarBd,
 ItalicFont=XB NiloofarIt,
 BoldItalicFont=XB NiloofarBdIt
 ]{XB Niloofar}
-
+%%% table
+\usepackage{array, tabularx, makecell, booktabs, multirow}
+\usepackage[table]{xcolor}
 %\setdigitfont[
 %Scale=1.09,
 %Extension=.ttf, 
@@ -60,10 +62,16 @@ BoldItalicFont=XB NiloofarBdIt
 %BoldItalicFont=XB NiloofarBdIt
 %]{XB Niloofar}
 
+
 \defpersianfont\sayeh[
 Scale=1,
 Path=styles/fonts/
 ]{XB Kayhan Pook}
+
+%_____________________python code_________________
+
+\usepackage{minted}
+\usepackage{xcolor}
 
 
 % -------------------- Styles --------------------
@@ -96,6 +104,9 @@ Path=styles/fonts/
 	\begin{algorithm}[t]\caption{#1}\label{algo:#2}\vspace{0.2em}\begin{algorithmic}[1]}
 	{\end{algorithmic}\vspace{0.2em}\end{algorithm}\end{latin}}
 
+
+
+% python 
 
 % -------------------- Commands --------------------
 
@@ -130,10 +141,10 @@ Path=styles/fonts/
 \renewcommand{\ge}{\gee}
 
 \newcommand{\مهم}[1]{\textbf{#1}}
-\renewcommand{\برچسب}{\label}
+\newcommand{\برچسب}{\label}
 
 \newcommand{\REM}[1]{}
-\renewcommand{\حذف}{\REM}
+\newcommand{\حذف}{\REM}
 \newcommand{\لر}{\lr}
 \newcommand{\کد}[1]{\lr{\tt #1}}
 \newcommand{\ft}[1]{\LTRfootnote{\lr{\ #1}}}

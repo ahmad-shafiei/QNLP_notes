@@ -1,0 +1,59 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{sentence2diagram}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{sentence}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{)} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}} \PYG{n}{Diagram}\PYG{p}{:}
+    \PYG{n}{labeled} \PYG{o}{=} \PYG{n}{process\PYGZus{}sentence}\PYG{p}{(}\PYG{n}{sentence}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} [(token, role), ...]}
+    \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{labeled}\PYG{p}{)} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{2}\PYG{p}{:}
+        \PYG{k}{raise} \PYG{n+ne}{ValueError}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Too short sentence for parsing: }\PYG{l+s+si}{\PYGZob{}}\PYG{n}{labeled}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{has\PYGZus{}ra} \PYG{o}{=} \PYG{n+nb}{any}\PYG{p}{(}\PYG{n}{tok} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{را}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{or} \PYG{n}{role} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ra}\PYG{l+s+s1}{\PYGZsq{}} \PYG{k}{for} \PYG{n}{tok}\PYG{p}{,} \PYG{n}{role} \PYG{o+ow}{in} \PYG{n}{labeled}\PYG{p}{)}
+    \PYG{n}{words}\PYG{p}{,} \PYG{n}{subj}\PYG{p}{,} \PYG{n}{obj}\PYG{p}{,} \PYG{n}{ra}\PYG{p}{,} \PYG{n}{verb} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}\PYG{p}{,} \PYG{k+kc}{None}
+    \PYG{n}{i}\PYG{p}{,} \PYG{n}{n} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{labeled}\PYG{p}{)}
+    \PYG{k}{while} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{n}\PYG{p}{:}
+        \PYG{n}{tok}\PYG{p}{,} \PYG{n}{role} \PYG{o}{=} \PYG{n}{labeled}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}
+        \PYG{k}{if} \PYG{n}{role} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{subj}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{parts}\PYG{p}{,} \PYG{n}{j} \PYG{o}{=} \PYG{p}{[}\PYG{n}{tok}\PYG{p}{]}\PYG{p}{,} \PYG{n}{i} \PYG{o}{+} \PYG{l+m+mi}{1}
+            \PYG{k}{while} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{n} \PYG{o+ow}{and} \PYG{n}{labeled}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{adj}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+                \PYG{n}{parts}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{labeled}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}\PYG{p}{;} \PYG{n}{j} \PYG{o}{+}\PYG{o}{=} \PYG{l+m+mi}{1}
+            \PYG{n}{w} \PYG{o}{=} \PYG{n}{Word}\PYG{p}{(}\PYG{n}{fix\PYGZus{}persian}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{ }\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{parts}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{N}\PYG{p}{)}
+            \PYG{n}{subj}\PYG{p}{,} \PYG{n}{i} \PYG{o}{=} \PYG{n}{w}\PYG{p}{,} \PYG{n}{j}\PYG{p}{;} \PYG{n}{words}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}\PYG{p}{;} \PYG{k}{continue}
+        \PYG{k}{if} \PYG{n}{tok} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{را}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{or} \PYG{n}{role} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ra}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{w} \PYG{o}{=} \PYG{n}{Word}\PYG{p}{(}\PYG{n}{fix\PYGZus{}persian}\PYG{p}{(}\PYG{n}{tok}\PYG{p}{)}\PYG{p}{,} \PYG{n}{N}\PYG{o}{.}\PYG{n}{r} \PYG{o}{@} \PYG{n}{O}\PYG{p}{)}
+            \PYG{n}{ra} \PYG{o}{=} \PYG{n}{w}\PYG{p}{;} \PYG{n}{words}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}\PYG{p}{;} \PYG{n}{i} \PYG{o}{+}\PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{k}{continue}
+        \PYG{k}{if} \PYG{n}{role} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{obj}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{or} \PYG{p}{(}\PYG{n}{role} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{other}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{and} \PYG{n+nb}{any}\PYG{p}{(}\PYG{n}{labeled}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{==}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{را}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{or} \PYGZbs{}
+                  \PYG{n}{labeled}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{==}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ra}\PYG{l+s+s1}{\PYGZsq{}} \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{n}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{parts}\PYG{p}{,} \PYG{n}{j}\PYG{p}{,} \PYG{n}{ra\PYGZus{}idx} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{k+kc}{None}
+            \PYG{k}{for} \PYG{n}{k} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{i}\PYG{o}{+}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{n}\PYG{p}{)}\PYG{p}{:}
+                \PYG{k}{if} \PYG{n}{labeled}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{را}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o+ow}{or} \PYGZbs{}
+                    \PYG{n}{labeled}\PYG{p}{[}\PYG{n}{k}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{ra}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:} \PYG{n}{ra\PYGZus{}idx} \PYG{o}{=} \PYG{n}{k}\PYG{p}{;} \PYG{k}{break}
+            \PYG{k}{if} \PYG{n}{ra\PYGZus{}idx} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{k+kc}{None}\PYG{p}{:}
+                \PYG{k}{while} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{ra\PYGZus{}idx}\PYG{p}{:} \PYG{n}{parts}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{labeled}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}\PYG{p}{;}\PYGZbs{}
+                 \PYG{n}{j} \PYG{o}{+}\PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{ra\PYGZus{}idx}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{k}{while} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{n} \PYG{o+ow}{and} \PYG{n}{labeled}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o+ow}{in} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{adj}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{other}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{obj}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+                    \PYG{n}{parts}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{labeled}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{p}{)}\PYG{p}{;} \PYG{n}{j} \PYG{o}{+}\PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{n}{i} \PYG{o}{=} \PYG{n}{j}
+            \PYG{n}{w} \PYG{o}{=} \PYG{n}{Word}\PYG{p}{(}\PYG{n}{fix\PYGZus{}persian}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{ }\PYG{l+s+s2}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{parts}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{N}\PYG{p}{)}
+            \PYG{n}{obj} \PYG{o}{=} \PYG{n}{w}\PYG{p}{;} \PYG{n}{words}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}\PYG{p}{;} \PYG{k}{continue}
+        \PYG{k}{if} \PYG{n}{role} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{verb}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{t} \PYG{o}{=} \PYG{n}{O}\PYG{o}{.}\PYG{n}{r} \PYG{o}{@} \PYG{n}{N}\PYG{o}{.}\PYG{n}{r} \PYG{o}{@} \PYG{n}{S} \PYG{k}{if} \PYG{n}{has\PYGZus{}ra} \PYG{k}{else} \PYG{n}{N}\PYG{o}{.}\PYG{n}{r} \PYG{o}{@} \PYG{n}{N}\PYG{o}{.}\PYG{n}{l} \PYG{o}{@} \PYG{n}{S}
+            \PYG{n}{w} \PYG{o}{=} \PYG{n}{Word}\PYG{p}{(}\PYG{n}{fix\PYGZus{}persian}\PYG{p}{(}\PYG{n}{tok}\PYG{p}{)}\PYG{p}{,} \PYG{n}{t}\PYG{p}{)}
+            \PYG{n}{verb} \PYG{o}{=} \PYG{n}{w}\PYG{p}{;} \PYG{n}{words}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}\PYG{p}{;} \PYG{n}{i} \PYG{o}{+}\PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{k}{continue}
+        \PYG{k}{if} \PYG{n}{role} \PYG{o+ow}{in} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{adj}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{other}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{w} \PYG{o}{=} \PYG{n}{Word}\PYG{p}{(}\PYG{n}{fix\PYGZus{}persian}\PYG{p}{(}\PYG{n}{tok}\PYG{p}{)}\PYG{p}{,} \PYG{n}{N}\PYG{p}{)}
+            \PYG{n}{words}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}\PYG{p}{;} \PYG{n}{i} \PYG{o}{+}\PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{k}{continue}
+        \PYG{n}{i} \PYG{o}{+}\PYG{o}{=} \PYG{l+m+mi}{1}
+    \PYG{k}{if} \PYG{n}{subj} \PYG{o+ow}{is} \PYG{k+kc}{None} \PYG{o+ow}{or} \PYG{n}{verb} \PYG{o+ow}{is} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{k}{raise} \PYG{n+ne}{ValueError}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Sentence must have at least subj and verb}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{words}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{w} \PYG{o+ow}{in} \PYG{n}{words}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{p}{]}\PYG{p}{:}
+        \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{@} \PYG{n}{w}
+    \PYG{k}{if} \PYG{n}{has\PYGZus{}ra} \PYG{o+ow}{and} \PYG{n}{obj} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{k+kc}{None} \PYG{o+ow}{and} \PYG{n}{ra} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{Id}\PYG{p}{(}\PYG{n}{N}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Cup}\PYG{p}{(}\PYG{n}{N}\PYG{p}{,} \PYG{n}{N}\PYG{o}{.}\PYG{n}{r}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Id}\PYG{p}{(}\PYG{n}{O} \PYG{o}{@} \PYG{n}{O}\PYG{o}{.}\PYG{n}{r} \PYG{o}{@} \PYG{n}{N}\PYG{o}{.}\PYG{n}{r} \PYG{o}{@} \PYG{n}{S}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{Id}\PYG{p}{(}\PYG{n}{N}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Cup}\PYG{p}{(}\PYG{n}{O}\PYG{p}{,} \PYG{n}{O}\PYG{o}{.}\PYG{n}{r}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Id}\PYG{p}{(}\PYG{n}{N}\PYG{o}{.}\PYG{n}{r} \PYG{o}{@} \PYG{n}{S}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{Cup}\PYG{p}{(}\PYG{n}{N}\PYG{p}{,} \PYG{n}{N}\PYG{o}{.}\PYG{n}{r}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Id}\PYG{p}{(}\PYG{n}{S}\PYG{p}{)}\PYG{p}{)}
+    \PYG{k}{else}\PYG{p}{:}
+        \PYG{k}{if} \PYG{n}{obj} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{k+kc}{None}\PYG{p}{:}
+            \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{Id}\PYG{p}{(}\PYG{n}{N}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Cup}\PYG{p}{(}\PYG{n}{N}\PYG{p}{,} \PYG{n}{N}\PYG{o}{.}\PYG{n}{r}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Id}\PYG{p}{(}\PYG{n}{N}\PYG{o}{.}\PYG{n}{l} \PYG{o}{@} \PYG{n}{S}\PYG{p}{)}\PYG{p}{)}
+            \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{Swap}\PYG{p}{(}\PYG{n}{N}\PYG{p}{,} \PYG{n}{N}\PYG{o}{.}\PYG{n}{l}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Id}\PYG{p}{(}\PYG{n}{S}\PYG{p}{)}\PYG{p}{)}
+            \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{Cup}\PYG{p}{(}\PYG{n}{N}\PYG{o}{.}\PYG{n}{l}\PYG{p}{,} \PYG{n}{N}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Id}\PYG{p}{(}\PYG{n}{S}\PYG{p}{)}\PYG{p}{)}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{Cup}\PYG{p}{(}\PYG{n}{N}\PYG{p}{,} \PYG{n}{N}\PYG{o}{.}\PYG{n}{l}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Id}\PYG{p}{(}\PYG{n}{S}\PYG{p}{)}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{diagram}
+\end{MintedVerbatim}

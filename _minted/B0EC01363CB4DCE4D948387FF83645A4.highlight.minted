@@ -1,0 +1,13 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+conda\PYG{+w}{ }create\PYG{+w}{ }\PYGZhy{}n\PYG{+w}{ }qnlp\PYG{+w}{ }\PYG{n+nv}{python}\PYG{o}{=}\PYG{l+m}{3}.9
+\PYG{c+c1}{\PYGZsh{} Activate the environment}
+conda\PYG{+w}{ }activate\PYG{+w}{ }qnlp
+\PYG{c+c1}{\PYGZsh{} Install basic scientific libraries}
+conda\PYG{+w}{ }install\PYG{+w}{ }numpy\PYG{+w}{ }scipy\PYG{+w}{ }matplotlib
+\PYG{c+c1}{\PYGZsh{} Install specialized libraries}
+pip\PYG{+w}{ }install\PYG{+w}{ }\PYG{n+nv}{lambeq}\PYG{o}{=}\PYG{o}{=}\PYG{l+m}{0}.5.0
+pip\PYG{+w}{ }install\PYG{+w}{ }discopy\PYGZgt{}\PYG{o}{=}\PYG{l+m}{1}.1.4
+pip\PYG{+w}{ }install\PYG{+w}{ }\PYG{n+nv}{qiskit}\PYG{o}{=}\PYG{o}{=}\PYG{l+m}{0}.45.2
+pip\PYG{+w}{ }install\PYG{+w}{ }pennylane\PYGZgt{}\PYG{o}{=}\PYG{l+m}{0}.34
+pip\PYG{+w}{ }install\PYG{+w}{ }torch\PYGZgt{}\PYG{o}{=}\PYG{l+m}{2}.1
+\end{MintedVerbatim}

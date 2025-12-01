@@ -1,0 +1,29 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{simple\PYGZus{}pregroup\PYGZus{}parser}\PYG{p}{(}\PYG{n}{labeled\PYGZus{}tokens}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{words} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{n}{subj} \PYG{o}{=} \PYG{n}{obj} \PYG{o}{=} \PYG{n}{verb} \PYG{o}{=} \PYG{k+kc}{None}
+    \PYG{k}{for} \PYG{n}{tok}\PYG{p}{,} \PYG{n}{role} \PYG{o+ow}{in} \PYG{n}{labeled\PYGZus{}tokens}\PYG{p}{:}
+        \PYG{n}{display\PYGZus{}tok} \PYG{o}{=} \PYG{n}{fix\PYGZus{}persian}\PYG{p}{(}\PYG{n}{tok}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n}{role} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{subj}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{w} \PYG{o}{=} \PYG{n}{Word}\PYG{p}{(}\PYG{n}{display\PYGZus{}tok}\PYG{p}{,} \PYG{n}{N}\PYG{p}{)}\PYG{p}{;} \PYG{n}{subj} \PYG{o}{=} \PYG{n}{w}\PYG{p}{;} \PYG{n}{words}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}
+        \PYG{k}{elif} \PYG{n}{role} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{obj}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{w} \PYG{o}{=} \PYG{n}{Word}\PYG{p}{(}\PYG{n}{display\PYGZus{}tok}\PYG{p}{,} \PYG{n}{N}\PYG{p}{)}\PYG{p}{;} \PYG{n}{obj} \PYG{o}{=} \PYG{n}{w}\PYG{p}{;} \PYG{n}{words}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}
+        \PYG{k}{elif} \PYG{n}{role} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{verb}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{w} \PYG{o}{=} \PYG{n}{Word}\PYG{p}{(}\PYG{n}{display\PYGZus{}tok}\PYG{p}{,} \PYG{n}{N}\PYG{o}{.}\PYG{n}{r} \PYG{o}{@} \PYG{n}{N}\PYG{o}{.}\PYG{n}{l} \PYG{o}{@} \PYG{n}{S}\PYG{p}{)}\PYG{p}{;} \PYG{n}{verb} \PYG{o}{=} \PYG{n}{w}\PYG{p}{;} \PYG{n}{words}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}
+        \PYG{k}{elif} \PYG{n}{role} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+s1}{adj}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{w} \PYG{o}{=} \PYG{n}{Word}\PYG{p}{(}\PYG{n}{display\PYGZus{}tok}\PYG{p}{,} \PYG{n}{N}\PYG{p}{)}\PYG{p}{;} \PYG{n}{words}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{k}{continue}
+    \PYG{k}{if} \PYG{n}{subj} \PYG{o+ow}{is} \PYG{k+kc}{None} \PYG{o+ow}{or} \PYG{n}{verb} \PYG{o+ow}{is} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{k}{raise} \PYG{n+ne}{ValueError}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Sentence must contain at least subj and verb}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{words}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+    \PYG{k}{for} \PYG{n}{w} \PYG{o+ow}{in} \PYG{n}{words}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{p}{]}\PYG{p}{:}
+        \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{@} \PYG{n}{w}
+    \PYG{k}{if} \PYG{n}{obj} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{k+kc}{None}\PYG{p}{:}
+        \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{Id}\PYG{p}{(}\PYG{n}{N}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Cup}\PYG{p}{(}\PYG{n}{N}\PYG{p}{,} \PYG{n}{N}\PYG{o}{.}\PYG{n}{r}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Id}\PYG{p}{(}\PYG{n}{N}\PYG{o}{.}\PYG{n}{l} \PYG{o}{@} \PYG{n}{S}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{Swap}\PYG{p}{(}\PYG{n}{N}\PYG{p}{,} \PYG{n}{N}\PYG{o}{.}\PYG{n}{l}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Id}\PYG{p}{(}\PYG{n}{S}\PYG{p}{)}\PYG{p}{)}
+        \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{Cup}\PYG{p}{(}\PYG{n}{N}\PYG{o}{.}\PYG{n}{l}\PYG{p}{,} \PYG{n}{N}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Id}\PYG{p}{(}\PYG{n}{S}\PYG{p}{)}\PYG{p}{)}
+    \PYG{k}{else}\PYG{p}{:}
+        \PYG{n}{diagram} \PYG{o}{=} \PYG{n}{diagram} \PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{p}{(}\PYG{n}{Cup}\PYG{p}{(}\PYG{n}{N}\PYG{p}{,} \PYG{n}{N}\PYG{o}{.}\PYG{n}{l}\PYG{p}{)} \PYG{o}{@} \PYG{n}{Id}\PYG{p}{(}\PYG{n}{S}\PYG{p}{)}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{diagram}
+\end{MintedVerbatim}
